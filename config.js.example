@@ -1,0 +1,4 @@
+module.exports = {
+    token: '123456789:ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+    admin: 123456789,
+};

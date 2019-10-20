@@ -1,0 +1,9 @@
+{
+  "name": "telegame",
+  "version": "0.1",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "telegraf": "^3.33.0"
+  }
+}
