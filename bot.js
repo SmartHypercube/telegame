@@ -34,23 +34,26 @@ bot.command('horse', async ctx => {
 bot.action(/horse_bet_\d+/, async ctx => {
     const game = data.game.get(ctx.chat.id);
     if (!game || game.message_id !== ctx.update.callback_query.message.message_id) {
+        ctx.answerCbQuery('？？？');
         return;
     }
-    game.bet(ctx.update.callback_query.from, ctx.update.callback_query.data);
+    ctx.answerCbQuery(game.bet(ctx.update.callback_query.from, ctx.update.callback_query.data));
 });
 bot.action(/horse_select_\d+/, async ctx => {
     const game = data.game.get(ctx.chat.id);
     if (!game || game.message_id !== ctx.update.callback_query.message.message_id) {
+        ctx.answerCbQuery('？？？');
         return;
     }
-    game.select(ctx.update.callback_query.from, ctx.update.callback_query.data);
+    ctx.answerCbQuery(game.select(ctx.update.callback_query.from, ctx.update.callback_query.data));
 });
 bot.action(/horse_boost_\d+/, async ctx => {
     const game = data.game.get(ctx.chat.id);
     if (!game || game.message_id !== ctx.update.callback_query.message.message_id) {
+        ctx.answerCbQuery('？？？');
         return;
     }
-    game.boost(ctx.update.callback_query.from, ctx.update.callback_query.data);
+    ctx.answerCbQuery(game.boost(ctx.update.callback_query.from, ctx.update.callback_query.data));
 });
 
 bot.launch();

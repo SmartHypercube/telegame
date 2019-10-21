@@ -21,7 +21,7 @@ class HorseGame {
         const balance = data.balance.get(user.id);
         const value = Math.min(Number(choice.slice(10)), balance);
         if (!value) {
-            return;
+            return '你没钱了，下注失败';
         }
         data.balance.set(user.id, balance - value);
         let bet = this.bets.find(i => i.id===user.id);
@@ -33,43 +33,52 @@ class HorseGame {
         }
         this.expire = new Date();
         this.expire.setSeconds(this.expire.getSeconds() + 10);
+        return '下注成功';
     }
     select(user, choice) {
         const horse = Number(choice.slice(13));
         let bet = this.bets.find(i => i.id===user.id);
         if (!bet) {
-            return;
+            return '？？？';
         }
         bet.name = user.first_name;
         bet.horse = horse;
         this.expire = new Date();
         this.expire.setSeconds(this.expire.getSeconds() + 10);
+        return '';
     }
     boost(user, choice) {
         const bet = this.bets.find(i => i.id===user.id);
         if (!bet) {
-            return;
+            return '？？？';
         }
         const horse = this.horses.find(i => i.id===bet.horse);
-        if (!horse || horse.state === 'fell' || horse.state === 'dead') {
-            return;
+        if (!horse) {
+            return '你没有马';
+        }
+        if (horse.state === 'fell') {
+            return '你的马摔了';
+        }
+        if (horse.state === 'dead') {
+            return '你的马死了';
         }
         switch (Number(choice.slice(12))) {
             case 1:
                 if (Math.random() < .4) {
                     horse.state = 'fell';
-                } else {
-                    horse.value -= Math.floor(Math.random() * 7);
-                    horse.value = Math.max(horse.value, 0);
+                    return '你摔了你的马';
                 }
-                break;
+                horse.value -= Math.floor(Math.random() * 7);
+                horse.value = Math.max(horse.value, 0);
+                return '';
             case 2:
                 if (Math.random() < .4) {
                     horse.state = 'dead';
-                } else {
-                    horse.value -= Math.floor(Math.random() * 7 + 3);
-                    horse.value = Math.max(horse.value, 0);
+                    return '你害死了你的马';
                 }
+                horse.value -= Math.floor(Math.random() * 7 + 3);
+                horse.value = Math.max(horse.value, 0);
+                return '';
         }
     }
     async run() {
