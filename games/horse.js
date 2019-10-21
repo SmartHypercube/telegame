@@ -56,17 +56,19 @@ class HorseGame {
         }
         switch (Number(choice.slice(12))) {
             case 1:
-                horse.value -= Math.floor(Math.random() * 7);
-                horse.value = Math.max(horse.value, 0);
                 if (Math.random() < .4) {
                     horse.state = 'fell';
+                } else {
+                    horse.value -= Math.floor(Math.random() * 7);
+                    horse.value = Math.max(horse.value, 0);
                 }
                 break;
             case 2:
-                horse.value -= Math.floor(Math.random() * 7 + 3);
-                horse.value = Math.max(horse.value, 0);
                 if (Math.random() < .4) {
                     horse.state = 'dead';
+                } else {
+                    horse.value -= Math.floor(Math.random() * 7 + 3);
+                    horse.value = Math.max(horse.value, 0);
                 }
         }
     }
