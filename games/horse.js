@@ -115,7 +115,8 @@ class HorseGame {
             while (now < this.expire) {
                 const seconds = Math.ceil((this.expire - now) / 1000);
                 const text = ['<b>赛马</b>', `请下注…… ${seconds}`].concat(this.bets.map(i => `${i.name}: ${i.value} (${data.balance.get(i.id)})`)).join('\n');
-                await this.telegram.editMessageText(this.chat_id, await this.message_id, null, text, extra);
+                this.telegram.editMessageText(this.chat_id, await this.message_id, null, text, extra)
+                    .catch(e => {console.log(e);});
                 await sleep(1000);
                 now = new Date();
             }
@@ -136,7 +137,8 @@ class HorseGame {
             while (now < this.expire) {
                 const seconds = Math.ceil((this.expire - now) / 1000);
                 const text = ['<b>赛马</b>', `请选马…… ${seconds}`].concat(this.bets.map(i => `${i.name}: ${i.horse||''}`)).join('\n');
-                await this.telegram.editMessageText(this.chat_id, await this.message_id, null, text, extra);
+                this.telegram.editMessageText(this.chat_id, await this.message_id, null, text, extra)
+                    .catch(e => {console.log(e);});
                 await sleep(1000);
                 now = new Date();
             }
@@ -176,7 +178,8 @@ class HorseGame {
                 const text = ['<b>赛马</b>'].concat(this.horses.map(i => (
                     ' '.repeat(i.value) + {normal: '🏇', fell: '🐎', dead: '☠️'}[i.state] + i.id
                 ))).join('\n');
-                await this.telegram.editMessageText(this.chat_id, await this.message_id, null, text, extra);
+                this.telegram.editMessageText(this.chat_id, await this.message_id, null, text, extra)
+                    .catch(e => {console.log(e);});
                 if (this.horses.some(i => !i.value) || this.horses.every(i => i.state==='dead')) {
                     break;
                 }
